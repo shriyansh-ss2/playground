@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:playgorund/main.dart';
+import 'package:playground/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -25,6 +25,46 @@ void main() {
 
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets('Counter decrements test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+
+    // Tap the '-' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.remove));
+    await tester.pump();
+
+    // Verify that our counter has decremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('-1'), findsOneWidget);
+  });
+
+  testWidgets('Counter increment and decrement test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+
+    // Increment twice
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify counter is at 2
+    expect(find.text('2'), findsOneWidget);
+
+    // Decrement once
+    await tester.tap(find.byIcon(Icons.remove));
+    await tester.pump();
+
+    // Verify counter is back to 1
     expect(find.text('1'), findsOneWidget);
   });
 }
